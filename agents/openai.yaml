@@ -1,0 +1,3 @@
+display_name: Prompt Efficacy Scorer
+short_description: Audit prompts for contradiction, bloat, weak structure, and model-fit issues, then produce a stronger rewrite.
+default_prompt: Review this prompt for efficacy, explain the main failure risks, and rewrite it to be clearer and more reliable without changing intent.

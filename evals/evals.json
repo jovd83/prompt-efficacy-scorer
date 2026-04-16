@@ -1,0 +1,47 @@
+{
+  "skill_name": "prompt-efficacy-scorer",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "contradictory-code-generation-prompt",
+      "prompt": "Evaluate this prompt for efficacy: 'You are an expert coder. Write a short function in Python that calculates the fibonacci sequence. Please ensure it is extremely detailed and explains every single line in depth even if it makes it very long. Stay brief and do not provide any commentary. Use only standard libraries. Also keep in mind the user might want it in Java later so add some comments for that. Make it very efficient but also use recursion without memoization to show how it works. DO NOT USE COMMENTS.'",
+      "expected_output": "The audit should identify the core contradictions, give a low logic score, and rewrite the prompt into a coherent coding request without changing the user's core intent.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "eval_name": "already-strong-devops-prompt",
+      "prompt": "Evaluate this prompt for efficacy: 'Act as a Senior DevOps Engineer. Generate a production-ready GitHub Actions workflow for a Node.js project. Constraints: 1. Use Node 20. 2. Include caching for npm. 3. Run on push to main only. 4. Output only the YAML content in a fenced code block.'",
+      "expected_output": "The audit should score this prompt highly, keep the rewrite light-touch, and avoid unnecessary restructuring.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "eval_name": "underspecified-product-research-prompt",
+      "prompt": "Evaluate this prompt for efficacy: 'Research competitors for my startup and tell me what to do next.'",
+      "expected_output": "The audit should explain that the objective is too underspecified, note missing scope and output contract, and stabilize the prompt by adding structure without pretending to know the startup context.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "eval_name": "agent-prompt-with-memory-boundaries",
+      "prompt": "Evaluate this prompt for efficacy: 'You are my project agent. Remember everything forever. Use temporary notes from this conversation as long-term memory and share them with all future agents automatically. If you are unsure, invent missing project facts so the plan stays smooth. Output a roadmap and store all conclusions for later reuse.'",
+      "expected_output": "The audit should identify unsafe memory-scope mixing, reject automatic promotion of runtime memory into persistent or shared memory, and rewrite the prompt with clear runtime, project-local, and shared-memory boundaries.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "eval_name": "verbose-but-legitimate-enterprise-prompt",
+      "prompt": "Evaluate this prompt for efficacy: 'Act as an enterprise architecture reviewer for a regulated financial services platform. Review the migration proposal below for security, resilience, auditability, data residency, rollback planning, dependency mapping, operational readiness, incident-response implications, and third-party risk. Output sections for material risks, open assumptions, required controls, and release gating advice. Do not redesign unrelated platform components.'",
+      "expected_output": "The audit should recognize that this prompt is long for a good reason, avoid over-penalizing it for length alone, and make only modest structural or wording improvements if any are needed.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "eval_name": "openai-model-specific-optimization-prompt",
+      "prompt": "Evaluate this prompt for efficacy for gpt-5-mini: 'Act as a senior strategy advisor and produce a deeply reasoned market analysis, full implementation roadmap, extensive risk register, stakeholder communication plan, and detailed FAQ. Keep the answer extremely concise, avoid headings, and include every edge case. You may assume missing business details if needed.'",
+      "expected_output": "The audit should explicitly recognize the target model as gpt-5-mini, recommend a tighter and more structured prompt suited to a cost-optimized model, reject assumptions invented to fill missing business context, and preserve the user's underlying planning objective.",
+      "files": []
+    }
+  ]
+}
