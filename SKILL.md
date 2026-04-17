@@ -2,7 +2,7 @@
 name: prompt-efficacy-scorer
 description: Audit and improve prompts for clarity, internal consistency, instruction hierarchy, verbosity, and model fit. Use when a user wants to review, score, tighten, debug, or optimize a prompt, system prompt, agent instruction set, workflow prompt, or reusable template; when prompts feel bloated, conflicting, underspecified, or costly; or when a team needs a structured scorecard plus a safer optimized rewrite.
 metadata:
-  version: "2.0.0"
+  version: 2.0.0
   dispatcher-category: analysis
   dispatcher-capabilities: prompt-auditing, prompt-optimization, constraint-verification, prompt-rewrite, model-fit-review
   dispatcher-accepted-intents: evaluate_prompt_quality, optimize_prompt_efficacy, review_system_prompt, tighten_agent_instructions
