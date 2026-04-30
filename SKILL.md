@@ -1,8 +1,7 @@
 ---
 name: prompt-efficacy-scorer
-description: Audit and improve prompts for clarity, internal consistency, instruction hierarchy, verbosity, and model fit. Use when a user wants to review, score, tighten, debug, or optimize a prompt, system prompt, agent instruction set, workflow prompt, or reusable template; when prompts feel bloated, conflicting, underspecified, or costly; or when a team needs a structured scorecard plus a safer optimized rewrite.
+description: Audit and improve prompts for clarity, consistency, instruction hierarchy, verbosity, and model fit. Use to review, score, tighten, debug, or optimize a prompt, system prompt, agent instructions, or template, or deliver a scorecard plus an optimized rewrite.
 metadata:
-  version: 2.0.0
   dispatcher-category: analysis
   dispatcher-capabilities: prompt-auditing, prompt-optimization, constraint-verification, prompt-rewrite, model-fit-review
   dispatcher-accepted-intents: evaluate_prompt_quality, optimize_prompt_efficacy, review_system_prompt, tighten_agent_instructions
@@ -13,14 +12,18 @@ metadata:
   dispatcher-lifecycle: active
   dispatcher-risk: low
   dispatcher-writes-files: false
+
 ---
 
 ## Telemetry & Logging
 > [!IMPORTANT]
 > All usage of this skill must be logged via the Skill Dispatcher to ensure audit logs and wallboard analytics are accurate:
-> `./log-dispatch.cmd --skill <skill_name> --intent <intent> --reason <reason>` (or `./log-dispatch.sh` on Linux)
+> `./log-dispatch.cmd --skill <skill_name> --intent <intent> --model <model_name> --reason <reason>` (or `./log-dispatch.sh` on Linux)
 
 # Prompt Efficacy Scorer
+
+> **Version:** 2.0.1
+
 
 Use this skill to evaluate prompt quality, explain why a prompt is likely to succeed or fail, and produce a stronger revision without changing the user's actual goal.
 
