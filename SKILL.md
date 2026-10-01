@@ -2,22 +2,13 @@
 name: prompt-efficacy-scorer
 description: Audit and improve prompts for clarity, consistency, instruction hierarchy, verbosity, and model fit. Use to review, score, tighten, debug, or optimize a prompt, system prompt, agent instructions, or template, or deliver a scorecard plus an optimized rewrite.
 metadata:
-  dispatcher-category: analysis
-  dispatcher-capabilities: prompt-auditing, prompt-optimization, constraint-verification, prompt-rewrite, model-fit-review
-  dispatcher-accepted-intents: evaluate_prompt_quality, optimize_prompt_efficacy, review_system_prompt, tighten_agent_instructions
-  dispatcher-input-artifacts: prompt_candidate, target_model_spec, success_criteria
-  dispatcher-output-artifacts: efficacy_scorecard, optimized_prompt, prompt_audit_report
-  dispatcher-stack-tags: prompts, llm, agents, prompt-engineering, review
-  dispatcher-layer: feedback
-  dispatcher-lifecycle: active
-  dispatcher-risk: low
-  dispatcher-writes-files: false
-
+  author: jovd83
+  version: 2.0.2
 ---
 
 # Prompt Efficacy Scorer
 
-> **Version:** 2.0.1
+> **Version:** 2.0.2
 
 
 Use this skill to evaluate prompt quality, explain why a prompt is likely to succeed or fail, and produce a stronger revision without changing the user's actual goal.
