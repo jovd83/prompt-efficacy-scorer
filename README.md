@@ -1,6 +1,6 @@
 # Prompt Efficacy Scorer
 
-![Version](https://img.shields.io/badge/version-2.0.2-blue)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Validation](https://img.shields.io/badge/validation-executable-success)
 
@@ -44,12 +44,12 @@ prompt-efficacy-scorer/
 |-- scripts/
 |   `-- validate_skill.py
 `-- references/
-|-- rubric.md
+    |-- rubric.md
     |-- evaluation-guide.md
     `-- model-specific-examples.md
 ```
 
-Current version: `2.0.0`
+Current version: `2.1.0`
 
 License: `MIT`
 
@@ -82,29 +82,36 @@ Use this skill when a user asks to:
 ## Expected Output
 
 The default output is:
-- a numeric scorecard
+- a short header: what was audited, the prompt's job in one sentence, any assumptions, and a one-line verdict
+- a numeric scorecard, scored against fixed anchors so repeat runs land close together
 - a small set of critical risks
-- a rewrite strategy
+- a rewrite strategy: `tighten`, `reframe`, `stabilize`, or `scaffold` (for prompts too thin to run reliably)
 - an optimized prompt
-- a short change log
+- a short change log that separates what was kept, what was changed, and what was added as an assumption for you to confirm
 - an approximate complexity or token impact statement
 
 ## Design Principles
 
 - Preserve intent before optimizing wording.
 - Penalize contradictions more heavily than length.
+- Leave strong prompts mostly alone, and say so.
+- Label every default the rewrite adds instead of passing it off as the user's requirement.
+- Treat content the prompt's author doesn't control (tickets, documents, PR text) as data, never as instructions.
 - Prefer auditable improvements over vague "better prompt" claims.
 - Keep runtime memory, project-local memory, and shared memory separate.
 - Stay model-agnostic unless the user supplies model-specific constraints.
 
 ## Evaluation Strategy
 
-The initial eval set is in [evals/evals.json](./evals/evals.json). It covers:
+The eval set is in [evals/evals.json](./evals/evals.json). Each eval has a list of `expectations` to grade against. It covers:
 - contradictory prompts
 - already-good prompts
 - underspecified prompts
 - structured agent prompts with memory boundaries
 - prompts where shortening too aggressively would remove necessary nuance
+- a model-specific prompt for an OpenAI model
+- a template with placeholders whose output is parsed as JSON
+- a tool-using agent prompt for a Claude model that reads untrusted PR content
 
 See [references/evaluation-guide.md](./references/evaluation-guide.md) for how to extend the eval suite and compare revisions.
 
@@ -124,20 +131,20 @@ It verifies:
 - `evals/evals.json` parses correctly
 - the README mentions the current version and MIT license
 - UI metadata is present
+- every eval has at least one expectation
 - sample outputs exist
-- model-specific examples include the documented OpenAI model variants this repo currently covers
+- the model-specific guidance covers the documented OpenAI model variants and has Anthropic Claude and Google Gemini sections
 
 This is intentionally lightweight validation, not a full benchmark harness.
 
 ## Model-Specific Examples
 
-The skill itself remains model-agnostic by default. When the user supplies a target model, the examples in [references/model-specific-examples.md](./references/model-specific-examples.md) show how to adapt the audit for current OpenAI model profiles.
+The skill itself remains model-agnostic by default. When the user names a target model, vendor, or agent runtime, [references/model-specific-examples.md](./references/model-specific-examples.md) shows how to adapt the audit. It starts with vendor-neutral checks, then covers:
+- OpenAI: `gpt-5.2` for complex reasoning and multi-step agentic tasks, `gpt-5.2-codex` for long-horizon coding workflows, `gpt-5-mini` for cost-optimized reasoning/chat, and `gpt-5-nano` for high-throughput simpler instruction-following tasks
+- Anthropic Claude: literal instruction following, toned-down emphasis, XML-tagged inputs, and agent-harness concerns such as tool scope
+- Google Gemini: few-shot examples, context before the question, and Gemini 3 defaults
 
-The current examples cover:
-- `gpt-5.2` for complex reasoning and multi-step agentic tasks
-- `gpt-5.2-codex` for long-horizon coding workflows
-- `gpt-5-mini` for cost-optimized reasoning/chat
-- `gpt-5-nano` for high-throughput simpler instruction-following tasks
+Each vendor section names its source and the date it was reviewed.
 
 ## GitHub Readiness Notes
 

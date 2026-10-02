@@ -8,6 +8,24 @@ The score should predict practical execution quality, not just writing style. A 
 
 Total score: `100`
 
+## Score Anchors
+
+Use the same anchors for every dimension, as a share of that dimension's maximum. They keep a prompt from scoring differently on every run.
+
+| Share of max | Meaning |
+| :-- | :-- |
+| 90-100% | No real issue. Only polish is possible. |
+| 70-89% | Minor issues that rarely change the output. |
+| 45-69% | At least one issue that will change the output on some runs. |
+| 20-44% | Issues that will change the output on most runs. |
+| 0-19% | The dimension is broken: a direct contradiction in the core instruction, no stated task, or similar. |
+
+Overall bands:
+- `80-100` strong: say so, and use `tighten` or `stabilize` with light edits.
+- `60-79` workable: targeted fixes.
+- `40-59` weak: real restructuring or scaffolding is likely.
+- `0-39` broken: the prompt will not do its job reliably as written.
+
 ## 1. Intent Preservation `0-20`
 
 Question: does the prompt communicate a stable, recognizable objective?
@@ -52,6 +70,8 @@ Weak signs:
 - decorative persona language with no operational value
 - unnecessary backstory that does not change the task
 
+Score only the text that is there. Missing information belongs under Intent preservation or Structure, not here. A very short prompt with no filler can score high on density and low everywhere else.
+
 ## 4. Structure and Scannability `0-20`
 
 Question: can a model or human quickly identify the task, constraints, and output contract?
@@ -75,11 +95,16 @@ Strong signs:
 - realistic expectations for the target model and tools
 - explicit tool or context assumptions
 - formatting and reasoning expectations that match the runtime
+- content the author does not control (user input, tickets, documents, PR text, web pages, tool output) is delimited and labeled as data
+- tool-using agents have a stated scope: what they may read, change, run, or publish
 
 Weak signs:
-- requests that assume tools the model does not have
+- requests that assume tools the model does not have, such as web research with no browsing
 - excessive prompt length for a tight context budget
 - hidden dependency on shared memory or persistent state
+- untrusted input pasted inline where it can pass as instructions
+- tools granted with no boundaries, especially write, shell, or publish access
+- emphasis styling (all caps, "CRITICAL", "MUST ALWAYS") that current models tend to over-apply
 
 ## Rewrite Strategy Heuristics
 
@@ -97,6 +122,13 @@ Choose `stabilize` when:
 - the prompt is mostly good
 - it needs clearer output boundaries, sequencing, or failure handling
 - you want minimal change with better reliability
+
+Choose `scaffold` when:
+- the prompt is a sentence or two with no context, scope, or output contract
+- the goal is clear but the model would have to guess almost everything else
+- the fix is mostly additions: input slots for facts only the user knows, a scope, and an output format
+
+If two strategies fit, pick the one that changes less.
 
 ## Examples
 

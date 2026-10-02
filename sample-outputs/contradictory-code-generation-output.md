@@ -3,6 +3,10 @@
 - Linked eval: `contradictory-code-generation-prompt`
 - Eval ID: `0`
 
+**Audited:** a single code-generation prompt, model-agnostic
+**Job:** get a Python function that computes the Fibonacci sequence, with some explanation of how it works.
+**Verdict:** broken: four pairs of instructions contradict each other, so any output will ignore part of the prompt.
+
 ### Prompt Efficacy Scorecard: 34/100
 
 | Dimension | Score | Why it matters | Findings |
@@ -37,9 +41,12 @@ Output:
 ```
 
 ### Change Notes
-- Kept: the core request to generate a Python Fibonacci implementation.
-- Changed: removed contradictory instructions and reorganized the prompt into task, constraints, and output sections.
-- Optional follow-up: if the user wants a teaching version, ask whether they prefer explanation or production efficiency.
+- Kept: the core request to generate a Python Fibonacci implementation, standard library only.
+- Changed: "very efficient" won over "recursion without memoization", because naive recursion is exponential and the prompt calls efficiency a requirement.
+- Changed: "stay brief" won over "explain every line in depth", and the one-code-block output replaces "no commentary".
+- Changed: "DO NOT USE COMMENTS" (the last and most emphatic rule) was softened to "only if they clarify the approach". The Java comments were dropped because the Java port is hypothetical.
+- Changed: reorganized the prompt into task, constraints, and output sections.
+- Optional follow-up: if the user wants a teaching version, ask whether they prefer explanation or production efficiency; that choice flips two of the decisions above.
 
 ### Token / Complexity Impact
 - Original length: approximate medium-length prompt with high internal conflict

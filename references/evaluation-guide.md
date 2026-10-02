@@ -19,7 +19,9 @@ Maintain coverage across these categories:
 - underspecified prompt that needs structure, not just trimming
 - verbose but necessary prompt that should not be over-compressed
 - agent or system prompt with runtime memory, project-local memory, or shared-memory language
-- prompt with strict output formatting for downstream automation
+- prompt with strict output formatting for downstream automation, including a template with placeholders
+- prompt that reads untrusted input (tickets, documents, PR content) or gives an agent tools
+- prompt aimed at a named model from each vendor the skill has guidance for
 
 ## What To Look For
 
@@ -40,10 +42,18 @@ For each eval, check:
 
 ## Lightweight Regression Process
 
-1. Run the skill against the prompts in `evals/evals.json`.
-2. Compare results against the expected output guidance in each eval.
+1. Run each prompt in `evals/evals.json` twice: once with the skill and once without it (or with the previous version of the skill).
+2. Grade both outputs against the eval's `expectations`, and read the outputs side by side, not only the pass rates.
 3. Add a new eval whenever you discover a new failure mode.
 4. Keep the eval set small but varied; prefer representative edge cases over many near-duplicates.
+
+## Writing Expectations That Measure Something
+
+An expectation that both configurations pass doesn't tell you whether the skill helps. A strong model without the skill already finds most contradictions and missing context. The skill earns its keep on calibration, restraint, and honest accounting of changes, so aim expectations there:
+- Make "light-touch" measurable, for example "no new mandatory output sections" or "the rewrite stays within about twice the original length, or explains why not".
+- Check that added rules and defaults are labeled as assumptions, not presented as the user's own requirements.
+- Check that the rewrite keeps every explicit user constraint, or names the one it changed and why.
+- Split compound expectations, such as persistence versus sharing, so a partial pass is visible.
 
 ## Out Of Scope
 

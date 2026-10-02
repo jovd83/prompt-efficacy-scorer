@@ -54,6 +54,9 @@ def main() -> int:
     evals = eval_data.get("evals", [])
     if len(evals) < 5:
         return fail("evals/evals.json must contain at least 5 evals")
+    for item in evals:
+        if not item.get("expectations"):
+            return fail(f"eval {item.get('id')} ({item.get('eval_name')}) has no expectations")
 
     sample_outputs_dir = repo_root / "sample-outputs"
     if not sample_outputs_dir.exists():
@@ -69,6 +72,9 @@ def main() -> int:
     for model_name in ("gpt-5.2", "gpt-5.2-codex", "gpt-5-mini", "gpt-5-nano"):
         if model_name not in model_examples:
             return fail(f"model-specific examples are missing {model_name}")
+    for section in ("## Vendor-Neutral Checks", "## Anthropic Claude", "## Google Gemini"):
+        if section not in model_examples:
+            return fail(f"model-specific guidance is missing the '{section}' section")
 
     print("PASS: repository structure and validation checks look good")
     print(f"PASS: version {version}")

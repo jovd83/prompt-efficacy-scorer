@@ -3,6 +3,10 @@
 - Linked eval: `agent-prompt-with-memory-boundaries`
 - Eval ID: `3`
 
+**Audited:** an agent system prompt with memory instructions, model-agnostic
+**Job:** have a project agent produce a roadmap and keep useful conclusions for later work.
+**Verdict:** broken: it tells the agent to invent facts and to promote temporary notes into permanent, shared memory without review.
+
 ### Prompt Efficacy Scorecard: 28/100
 
 | Dimension | Score | Why it matters | Findings |

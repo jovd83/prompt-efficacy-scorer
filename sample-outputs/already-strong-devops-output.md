@@ -3,6 +3,10 @@
 - Linked eval: `already-strong-devops-prompt`
 - Eval ID: `1`
 
+**Audited:** a single code-generation prompt, model-agnostic
+**Job:** get one GitHub Actions CI workflow for a Node.js project that meets four explicit constraints.
+**Verdict:** strong: clear task, compatible constraints, and an exact output format. Only light cleanup is worthwhile.
+
 ### Prompt Efficacy Scorecard: 92/100
 
 | Dimension | Score | Why it matters | Findings |
